@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 
-export default function UserInput({ setItems }) {
+export default function UserInput({ items, setItems }) {
   const [currentItem, setCurrentItem] = useState({
     name: "",
     details: "",
     category: "",
-    price: 0,
+    price: "",
+    editMode: false,
   });
 
   function handleChange(event) {
@@ -19,35 +20,57 @@ export default function UserInput({ setItems }) {
     });
   }
 
-  useEffect(() => {
-    console.log(currentItem);
-  }, [currentItem]);
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const values = Object.values(currentItem);
+
+    if (values.some((value) => value == false)) {
+      return;
+    } else {
+      const newItems = [...items];
+
+      newItems.push(currentItem);
+
+      setItems(newItems);
+
+      setCurrentItem({
+        name: "",
+        details: "",
+        category: "",
+        price: "",
+        editMode: false,
+      });
+    }
+  }
 
   return (
     <>
-      <h4 className="mt-4">Add items to build your perfect workstation.</h4>
+      <h4 className="my-4">Add items to build your perfect workstation.</h4>
 
-      <Form>
-        <Form.Group
-          className="my-3"
-          name="name"
-          controlId="formItemName"
-          onChange={handleChange}
-        >
-          <Form.Control type="text" placeholder="Name" />
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="my-3" controlId="formItemName">
+          <Form.Control
+            type="text"
+            name="name"
+            placeholder="Name"
+            onChange={handleChange}
+            value={currentItem.name}
+          />
 
           {/* <Form.Text className="text-muted">
           We'll never share your email with anyone else.
         </Form.Text> */}
         </Form.Group>
 
-        <Form.Group
-          className="mb-3"
-          name="details"
-          controlId="formItemDetails"
-          onChange={handleChange}
-        >
-          <Form.Control type="text" placeholder="Details" />
+        <Form.Group className="mb-3" controlId="formItemDetails">
+          <Form.Control
+            type="text"
+            name="details"
+            placeholder="Details"
+            onChange={handleChange}
+            value={currentItem.details}
+          />
         </Form.Group>
 
         <Form.Select
@@ -55,25 +78,23 @@ export default function UserInput({ setItems }) {
           name="category"
           aria-label="Item category selection"
           onChange={handleChange}
+          value={currentItem.category}
         >
           <option>Category</option>
-
           <option value="Computer components">Computer components</option>
-
           <option value="Peripherals">Peripherals</option>
-
           <option value="Software">Software</option>
-
           <option value="Other">Other</option>
         </Form.Select>
 
-        <Form.Group
-          className="mb-3"
-          name="price"
-          controlId="formItemPrice"
-          onChange={handleChange}
-        >
-          <Form.Control type="text" placeholder="Price" />
+        <Form.Group className="mb-3" controlId="formItemPrice">
+          <Form.Control
+            type="text"
+            name="price"
+            placeholder="Price"
+            onChange={handleChange}
+            value={currentItem.price}
+          />
         </Form.Group>
 
         <Button variant="primary" type="submit">
