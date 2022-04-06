@@ -4,9 +4,20 @@ import { Container, Row, Col } from "react-bootstrap";
 import WorkstationTable from "./components/WorkstationTable";
 import Header from "./components/Header";
 import UserInput from "./components/UserInput";
+import Footer from "./components/Footer";
 
 function App() {
   const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setItems(JSON.parse(localStorage.getItem("items")));
+  }, []);
+
+  useEffect(() => {
+    if (items.length > 0) {
+      localStorage.setItem("items", JSON.stringify(items));
+    }
+  }, [items]);
 
   return (
     <div className="App">
@@ -15,13 +26,15 @@ function App() {
       <Container>
         <Row className="mt-4">
           <Col xs={12} md={5} lg={4}>
-            <UserInput setItems={setItems} />
+            <UserInput items={items} setItems={setItems} />
           </Col>
 
           <Col xs={12} md={7} lg={8}>
-            <WorkstationTable items={items} />
+            <WorkstationTable items={items} setItems={setItems} />
           </Col>
         </Row>
+
+        <Footer />
       </Container>
     </div>
   );
