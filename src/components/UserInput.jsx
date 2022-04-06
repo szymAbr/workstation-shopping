@@ -7,7 +7,7 @@ export default function UserInput({ items, setItems }) {
     details: "",
     category: "",
     price: "",
-    editMode: false,
+    // editMode: false,
   });
 
   function handleChange(event) {
@@ -39,7 +39,7 @@ export default function UserInput({ items, setItems }) {
         details: "",
         category: "",
         price: "",
-        editMode: false,
+        // editMode: false,
       });
     }
   }
