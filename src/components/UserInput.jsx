@@ -57,10 +57,6 @@ export default function UserInput({ items, setItems }) {
             onChange={handleChange}
             value={currentItem.name}
           />
-
-          {/* <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text> */}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formItemDetails">
@@ -81,7 +77,7 @@ export default function UserInput({ items, setItems }) {
           value={currentItem.category}
         >
           <option>Category</option>
-          <option value="Computer components">Computer components</option>
+          <option value="Components">Components</option>
           <option value="Peripherals">Peripherals</option>
           <option value="Software">Software</option>
           <option value="Other">Other</option>
@@ -91,7 +87,7 @@ export default function UserInput({ items, setItems }) {
           <Form.Control
             type="text"
             name="price"
-            placeholder="Price"
+            placeholder="Price [EUR]"
             onChange={handleChange}
             value={currentItem.price}
           />
