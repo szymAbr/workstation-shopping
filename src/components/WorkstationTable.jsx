@@ -3,7 +3,13 @@ import { Table, Button } from "react-bootstrap";
 import { Pencil, Trash } from "react-bootstrap-icons";
 
 export default function WorkstationTable({ items, setItems }) {
-  return (
+  function handleDelete(index) {
+    const newItems = items.filter((item) => items.indexOf(item) !== index);
+
+    setItems(newItems);
+  }
+
+  const table = (
     <>
       <Table className="mt-4" striped bordered hover variant="dark">
         <thead>
@@ -38,7 +44,7 @@ export default function WorkstationTable({ items, setItems }) {
                   <Button
                     variant="danger"
                     className="btn-sm"
-                    // onClick={() => handleClick()}
+                    onClick={() => handleDelete(index)}
                   >
                     <Trash />
                   </Button>
@@ -55,5 +61,17 @@ export default function WorkstationTable({ items, setItems }) {
         <p>Total price: </p>
       </div>
     </>
+  );
+
+  return (
+    <div>
+      {items && items.length > 0 ? (
+        table
+      ) : (
+        <h3 className="table-placeholder">
+          Add first item to display the table.
+        </h3>
+      )}
+    </div>
   );
 }
