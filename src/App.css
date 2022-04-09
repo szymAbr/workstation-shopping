@@ -10,3 +10,11 @@ html {
   margin-top: 10rem;
   margin-left: 2rem;
 }
+
+#form-incomplete {
+  color: red;
+}
+
+.hidden {
+  visibility: hidden;
+}

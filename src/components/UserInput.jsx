@@ -24,14 +24,16 @@ export default function UserInput({ items, setItems }) {
     event.preventDefault();
 
     const values = Object.values(currentItem);
+    const formInfo = document.getElementById("form-incomplete");
 
-    if (values.some((value) => value == false)) {
-      return;
+    if (values.some((value) => !value)) {
+      formInfo.classList.remove("hidden");
     } else {
       const newItems = [...items];
 
-      newItems.push(currentItem);
+      formInfo.classList.add("hidden");
 
+      newItems.push(currentItem);
       setItems(newItems);
 
       setCurrentItem({
@@ -44,6 +46,7 @@ export default function UserInput({ items, setItems }) {
     }
   }
 
+  // add edit option: different h4, button Add -> Confirm/OK, highlight edited row
   return (
     <>
       <h4 className="my-4">Add items to build your perfect workstation.</h4>
@@ -96,6 +99,10 @@ export default function UserInput({ items, setItems }) {
         <Button variant="primary" type="submit">
           Add
         </Button>
+
+        <p id="form-incomplete" className="mt-3 hidden">
+          Form incomplete
+        </p>
       </Form>
     </>
   );
