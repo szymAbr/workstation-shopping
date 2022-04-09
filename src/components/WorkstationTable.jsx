@@ -2,7 +2,12 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { Pencil, Trash } from "react-bootstrap-icons";
 
-export default function WorkstationTable({ items, setItems, totalPrice }) {
+export default function WorkstationTable({
+  items,
+  setItems,
+  totalPrice,
+  handleEdit
+}) {
   function handleDelete(index) {
     const newItems = items.filter((item) => items.indexOf(item) !== index);
 
@@ -36,7 +41,7 @@ export default function WorkstationTable({ items, setItems, totalPrice }) {
                   <Button
                     variant="warning"
                     className="btn-sm"
-                    // onClick={handleEdit}
+                    onClick={() => handleEdit(index)}
                   >
                     <Pencil />
                   </Button>

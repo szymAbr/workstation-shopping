@@ -9,6 +9,13 @@ import Footer from "./components/Footer";
 function App() {
   const [items, setItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [editMode, setEditMode] = useState(false);
+  const [editedItem, setEditedItem] = useState(0);
+
+  function handleEdit(index) {
+    setEditedItem(index)
+    setEditMode(true);
+  }
 
   useEffect(() => {
     const itemsFromStorage = JSON.parse(localStorage.getItem("items"));
@@ -40,7 +47,13 @@ function App() {
       <Container>
         <Row className="mt-4">
           <Col xs={12} md={5} lg={4}>
-            <UserInput items={items} setItems={setItems} />
+            <UserInput
+              items={items}
+              setItems={setItems}
+              editMode={editMode}
+              setEditMode={setEditMode}
+              editedItem={editedItem}
+            />
           </Col>
 
           <Col xs={12} md={7} lg={8}>
@@ -48,6 +61,7 @@ function App() {
               items={items}
               setItems={setItems}
               totalPrice={totalPrice}
+              handleEdit={handleEdit}
             />
           </Col>
         </Row>

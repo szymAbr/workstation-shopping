@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 
-export default function UserInput({ items, setItems }) {
+export default function UserInput({ items, setItems, editMode, setEditMode, editedItem }) {
   const [currentItem, setCurrentItem] = useState({
     name: "",
     details: "",
     category: "",
     price: "",
-    // editMode: false,
   });
 
   function handleChange(event) {
@@ -29,11 +28,17 @@ export default function UserInput({ items, setItems }) {
     if (values.some((value) => !value)) {
       formInfo.classList.remove("hidden");
     } else {
-      const newItems = [...items];
-
       formInfo.classList.add("hidden");
 
-      newItems.push(currentItem);
+      const newItems = [...items];
+
+      if (!editMode) {
+        newItems.push(currentItem);
+      } else {
+        newItems.splice(editedItem, 1, currentItem);
+        setEditMode(false);
+      }
+
       setItems(newItems);
 
       setCurrentItem({
@@ -41,7 +46,6 @@ export default function UserInput({ items, setItems }) {
         details: "",
         category: "",
         price: "",
-        // editMode: false,
       });
     }
   }
@@ -49,7 +53,7 @@ export default function UserInput({ items, setItems }) {
   // add edit option: different h4, button Add -> Confirm/OK, highlight edited row
   return (
     <>
-      <h4 className="my-4">Add items to build your perfect workstation.</h4>
+      <h4 className="my-4">{editMode ? "Edit item:" : "Add items:"}</h4>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group className="my-3" controlId="formItemName">
@@ -97,7 +101,7 @@ export default function UserInput({ items, setItems }) {
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Add
+          {editMode ? "Confirm changes" : "Add item"}
         </Button>
 
         <p id="form-incomplete" className="mt-3 hidden">
