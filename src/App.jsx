@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     const itemsFromStorage = JSON.parse(localStorage.getItem("items"));
@@ -20,6 +21,15 @@ function App() {
   useEffect(() => {
     if (items && items.length > 0) {
       localStorage.setItem("items", JSON.stringify(items));
+
+      setTotalPrice(() => {
+        const priceArray = items.map((item) => Number(item.price));
+        const total = priceArray.reduce(
+          (previousValue, currentValue) => previousValue + currentValue
+        );
+
+        return total;
+      });
     }
   }, [items]);
 
@@ -34,7 +44,11 @@ function App() {
           </Col>
 
           <Col xs={12} md={7} lg={8}>
-            <WorkstationTable items={items} setItems={setItems} />
+            <WorkstationTable
+              items={items}
+              setItems={setItems}
+              totalPrice={totalPrice}
+            />
           </Col>
         </Row>
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { Pencil, Trash } from "react-bootstrap-icons";
 
-export default function WorkstationTable({ items, setItems }) {
+export default function WorkstationTable({ items, setItems, totalPrice }) {
   function handleDelete(index) {
     const newItems = items.filter((item) => items.indexOf(item) !== index);
 
@@ -31,7 +31,7 @@ export default function WorkstationTable({ items, setItems }) {
                 <td>{item.name}</td>
                 <td>{item.details}</td>
                 <td>{item.category}</td>
-                <td>{item.price}</td>
+                <td>€{item.price}</td>
                 <td>
                   <Button
                     variant="warning"
@@ -56,9 +56,9 @@ export default function WorkstationTable({ items, setItems }) {
       </Table>
 
       <div>
-        <p className="mt-4">Overall item quantity: </p>
+        <p className="mt-4">Number of items: {items.length}</p>
 
-        <p>Total price: </p>
+        <p>Total price: €{totalPrice}</p>
       </div>
     </>
   );
