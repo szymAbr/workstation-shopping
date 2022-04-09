@@ -10,11 +10,15 @@ function App() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem("items")));
+    const itemsFromStorage = JSON.parse(localStorage.getItem("items"));
+
+    if (itemsFromStorage && itemsFromStorage.length > 0) {
+      setItems(JSON.parse(localStorage.getItem("items")));
+    }
   }, []);
 
   useEffect(() => {
-    if (items.length > 0) {
+    if (items && items.length > 0) {
       localStorage.setItem("items", JSON.stringify(items));
     }
   }, [items]);
