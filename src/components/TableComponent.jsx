@@ -63,9 +63,8 @@ export default function TableComponent({
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">
-                        Filter by category
-                      </Dropdown.Item>
+                      <Dropdown.Item disabled>Filter by category</Dropdown.Item>
+
                       <Dropdown.Divider />
 
                       {availableCategories.map((category) => (
@@ -76,6 +75,8 @@ export default function TableComponent({
                           {category}
                         </Dropdown.Item>
                       ))}
+
+                      <Dropdown.Divider />
 
                       <Dropdown.Item onClick={() => setCategoryFilter("")}>
                         Clear filter
