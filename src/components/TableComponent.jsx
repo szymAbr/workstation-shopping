@@ -9,8 +9,6 @@ export default function TableComponent({
   handleEdit,
   handleDelete,
   totalPrice,
-  categories,
-  categoryFilter,
   setCategoryFilter,
   availableCategories,
 }) {
@@ -89,14 +87,14 @@ export default function TableComponent({
             </thead>
 
             <tbody>
-              {items.map((item, index) => {
+              {items.map(({ name, details, category, price }, index) => {
                 return (
-                  <tr key={index + item.details}>
+                  <tr key={index + details}>
                     <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.details}</td>
-                    <td>{item.category}</td>
-                    <td>€{item.price}</td>
+                    <td>{name}</td>
+                    <td>{details}</td>
+                    <td>{category}</td>
+                    <td>€{price}</td>
                     <td>
                       <Button
                         variant="warning"
