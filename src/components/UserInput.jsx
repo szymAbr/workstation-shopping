@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 
-export default function UserInput({ items, setItems, editMode, setEditMode, editedItem }) {
+export default function UserInput({
+  items,
+  setItems,
+  editMode,
+  setEditMode,
+  editedItem,
+}) {
   const [currentItem, setCurrentItem] = useState({
     name: "",
     details: "",
@@ -62,7 +68,10 @@ export default function UserInput({ items, setItems, editMode, setEditMode, edit
             name="name"
             placeholder="Name"
             onChange={handleChange}
-            value={currentItem.name}
+            value={
+              currentItem.name.charAt(0).toUpperCase() +
+              currentItem.name.slice(1)
+            }
           />
         </Form.Group>
 
@@ -72,7 +81,10 @@ export default function UserInput({ items, setItems, editMode, setEditMode, edit
             name="details"
             placeholder="Details"
             onChange={handleChange}
-            value={currentItem.details}
+            value={
+              currentItem.details.charAt(0).toUpperCase() +
+              currentItem.details.slice(1)
+            }
           />
         </Form.Group>
 
@@ -81,7 +93,10 @@ export default function UserInput({ items, setItems, editMode, setEditMode, edit
           name="category"
           aria-label="Item category selection"
           onChange={handleChange}
-          value={currentItem.category}
+          value={
+            currentItem.category.charAt(0).toUpperCase() +
+            currentItem.category.slice(1)
+          }
         >
           <option>Category</option>
           <option value="Components">Components</option>
