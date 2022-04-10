@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 export default function UserInput({
@@ -9,7 +9,6 @@ export default function UserInput({
   setEditMode,
   editedItem,
   categories,
-  setCategories,
 }) {
   const [currentItem, setCurrentItem] = useState({
     name: "",
@@ -59,7 +58,8 @@ export default function UserInput({
     }
   }
 
-  // add edit option: different h4, button Add -> Confirm/OK, highlight edited row
+  const { name, details, category, price } = currentItem;
+
   return (
     <>
       <h4 className="my-4">{editMode ? "Edit item:" : "Add items:"}</h4>
@@ -71,10 +71,7 @@ export default function UserInput({
             name="name"
             placeholder="Name"
             onChange={handleChange}
-            value={
-              currentItem.name.charAt(0).toUpperCase() +
-              currentItem.name.slice(1)
-            }
+            value={name.charAt(0).toUpperCase() + name.slice(1)}
           />
         </Form.Group>
 
@@ -84,10 +81,7 @@ export default function UserInput({
             name="details"
             placeholder="Details"
             onChange={handleChange}
-            value={
-              currentItem.details.charAt(0).toUpperCase() +
-              currentItem.details.slice(1)
-            }
+            value={details.charAt(0).toUpperCase() + details.slice(1)}
           />
         </Form.Group>
 
@@ -96,10 +90,7 @@ export default function UserInput({
           name="category"
           aria-label="Item category selection"
           onChange={handleChange}
-          value={
-            currentItem.category.charAt(0).toUpperCase() +
-            currentItem.category.slice(1)
-          }
+          value={category.charAt(0).toUpperCase() + category.slice(1)}
         >
           <option>Category</option>
           {categories.map((category) => (
@@ -115,7 +106,7 @@ export default function UserInput({
             name="price"
             placeholder="Price [EUR]"
             onChange={handleChange}
-            value={currentItem.price}
+            value={price}
           />
         </Form.Group>
 
