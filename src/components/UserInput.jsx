@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 
@@ -16,6 +17,7 @@ export default function UserInput({
     category: "",
     price: "",
   });
+  const [isFormValid, setIsFormValid] = useState(true);
 
   function handleChange(event) {
     const propName = event.target.name;
@@ -31,12 +33,11 @@ export default function UserInput({
     event.preventDefault();
 
     const values = Object.values(currentItem);
-    const formInfo = document.getElementById("form-incomplete");
 
     if (values.some((value) => !value)) {
-      formInfo.classList.remove("hidden");
+      setIsFormValid(false);
     } else {
-      formInfo.classList.add("hidden");
+      setIsFormValid(true);
 
       const newItems = [...items];
 
@@ -122,7 +123,10 @@ export default function UserInput({
           {editMode ? "Confirm changes" : "Add item"}
         </Button>
 
-        <p id="form-incomplete" className="mt-3 hidden">
+        <p
+          id="form-incomplete"
+          className={clsx("mt-3", isFormValid && "hidden")}
+        >
           Form incomplete
         </p>
       </Form>
