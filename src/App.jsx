@@ -37,7 +37,7 @@ function App() {
   }, [items]);
 
   return (
-    <div className="App">
+    <div className="app">
       <Header />
 
       <Container>
