@@ -6,20 +6,31 @@ export default function WorkstationTable({
   setItems,
   totalPrice,
   handleEdit,
+  categories,
 }) {
   const [sortedItems, setSortedItems] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     field: "",
     direction: "",
   });
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [availableCategories, setAvailableCategories] = useState([]);
 
   function handleDelete(index) {
     if (sortedItems.length) {
-      const newItems = sortedItems.filter(
+      const unsortedIndex = items.indexOf(sortedItems[index]);
+
+      const newSortedItems = sortedItems.filter(
         (item) => sortedItems.indexOf(item) !== index
       );
 
-      setSortedItems(newItems);
+      const newItems = items.filter(
+        (item) => items.indexOf(item) !== unsortedIndex
+      );
+
+      setSortedItems(newSortedItems);
+      setItems(newItems);
     } else {
       const newItems = items.filter((item) => items.indexOf(item) !== index);
 
@@ -38,7 +49,13 @@ export default function WorkstationTable({
   }
 
   useEffect(() => {
-    let newItems = [...items];
+    let newItems = [];
+
+    if (filteredItems.length) {
+      newItems = [...filteredItems];
+    } else {
+      newItems = [...items];
+    }
 
     if (sortConfig.field) {
       newItems.sort((a, b) => {
@@ -64,16 +81,51 @@ export default function WorkstationTable({
       });
     }
 
-    setSortedItems(newItems);
-  }, [items, sortConfig]);
+    if (filteredItems.length) {
+      setFilteredItems(newItems);
+    } else {
+      setSortedItems(newItems);
+    }
+  }, [items, sortConfig, filteredItems]);
+
+  useEffect(() => {
+    if (categoryFilter) {
+      const newItems = items.filter((item) => item.category === categoryFilter);
+
+      setFilteredItems(newItems);
+    }
+  }, [categoryFilter, items]);
+
+  useEffect(() => {
+    let itemCategories = [];
+
+    items.forEach((item) => itemCategories.push(item.category));
+
+    const uniqueItemCategories = itemCategories.filter(
+      (value, index, self) => self.indexOf(value) === index
+    );
+
+    setAvailableCategories(uniqueItemCategories);
+  }, [items]);
 
   return (
     <TableComponent
-      items={sortedItems.length ? sortedItems : items}
+      items={
+        categoryFilter
+          ? filteredItems
+          : sortedItems.length
+          ? sortedItems
+          : items
+      }
       sortDirection={sortDirection}
+      sortConfig={sortConfig}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
       totalPrice={totalPrice}
+      categories={categories}
+      categoryFilter={categoryFilter}
+      setCategoryFilter={setCategoryFilter}
+      availableCategories={availableCategories}
     />
   );
 }

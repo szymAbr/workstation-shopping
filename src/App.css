@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+
 html {
   font-size: 16px;
 }
@@ -17,4 +19,39 @@ html {
 
 .hidden {
   visibility: hidden;
+}
+
+thead tr th {
+  max-width: 5rem;
+  vertical-align: middle;
+}
+
+thead tr th:hover {
+  cursor: pointer;
+}
+
+thead tr th.ascending::after {
+  font-family: "bootstrap-icons";
+  content: "\F128";
+  display: inline-block;
+  margin-left: 0.3rem;
+}
+
+thead tr th.descending::after {
+  font-family: "bootstrap-icons";
+  content: "\F148";
+  display: inline-block;
+  margin-left: 0.3rem;
+}
+
+.filter-icon {
+  margin-left: 0.3rem;
+}
+
+/* #dropdown-basic {
+  width: 2px;
+} */
+
+#thead-category {
+  
 }

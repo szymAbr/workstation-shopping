@@ -7,6 +7,8 @@ export default function UserInput({
   editMode,
   setEditMode,
   editedItem,
+  categories,
+  setCategories,
 }) {
   const [currentItem, setCurrentItem] = useState({
     name: "",
@@ -99,10 +101,11 @@ export default function UserInput({
           }
         >
           <option>Category</option>
-          <option value="Components">Components</option>
-          <option value="Peripherals">Peripherals</option>
-          <option value="Software">Software</option>
-          <option value="Other">Other</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </Form.Select>
 
         <Form.Group className="mb-3" controlId="formItemPrice">

@@ -11,9 +11,15 @@ function App() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [editMode, setEditMode] = useState(false);
   const [editedItem, setEditedItem] = useState(0);
+  const [categories, setCategories] = useState([
+    "Components",
+    "Peripherals",
+    "Software",
+    "Other",
+  ]);
 
   function handleEdit(index) {
-    setEditedItem(index)
+    setEditedItem(index);
     setEditMode(true);
   }
 
@@ -53,6 +59,8 @@ function App() {
               editMode={editMode}
               setEditMode={setEditMode}
               editedItem={editedItem}
+              categories={categories}
+              setCategories={setCategories}
             />
           </Col>
 
@@ -62,6 +70,7 @@ function App() {
               setItems={setItems}
               totalPrice={totalPrice}
               handleEdit={handleEdit}
+              categories={categories}
             />
           </Col>
         </Row>
