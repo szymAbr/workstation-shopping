@@ -52,11 +52,9 @@ export default function WorkstationTable({
     function checkTotalPrice(array) {
       if (array.length) {
         const priceArray = array.map((item) => Number(item.price));
-        const total = priceArray.reduce(
+        return priceArray.reduce(
           (previousValue, currentValue) => previousValue + currentValue
         );
-
-        return total;
       }
     }
 
