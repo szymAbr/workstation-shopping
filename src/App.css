@@ -4,8 +4,10 @@ html {
   font-size: 16px;
 }
 
-.App {
+.app {
   text-align: center;
+  background-color: #c4cdd611;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .table-placeholder {
