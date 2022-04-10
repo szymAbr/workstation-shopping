@@ -4,7 +4,6 @@ import TableComponent from "./TableComponent";
 export default function WorkstationTable({
   items,
   setItems,
-  totalPrice,
   handleEdit,
   categories,
 }) {
@@ -16,6 +15,7 @@ export default function WorkstationTable({
   const [categoryFilter, setCategoryFilter] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [availableCategories, setAvailableCategories] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   function handleDelete(index) {
     if (sortedItems.length) {
@@ -47,6 +47,25 @@ export default function WorkstationTable({
 
     setSortConfig({ field, direction });
   }
+
+  useEffect(() => {
+    function checkTotalPrice(array) {
+      if (array.length) {
+        const priceArray = array.map((item) => Number(item.price));
+        const total = priceArray.reduce(
+          (previousValue, currentValue) => previousValue + currentValue
+        );
+
+        return total;
+      }
+    }
+
+    if (categoryFilter) {
+      setTotalPrice(checkTotalPrice(filteredItems));
+    } else {
+      setTotalPrice(checkTotalPrice(items));
+    }
+  }, [items, filteredItems, categoryFilter]);
 
   useEffect(() => {
     let newItems = [];

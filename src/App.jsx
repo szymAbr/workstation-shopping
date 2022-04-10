@@ -8,7 +8,6 @@ import Footer from "./components/Footer";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   const [editMode, setEditMode] = useState(false);
   const [editedItem, setEditedItem] = useState(0);
   const [categories, setCategories] = useState([
@@ -34,15 +33,6 @@ function App() {
   useEffect(() => {
     if (items && items.length > 0) {
       localStorage.setItem("items", JSON.stringify(items));
-
-      setTotalPrice(() => {
-        const priceArray = items.map((item) => Number(item.price));
-        const total = priceArray.reduce(
-          (previousValue, currentValue) => previousValue + currentValue
-        );
-
-        return total;
-      });
     }
   }, [items]);
 
@@ -68,7 +58,6 @@ function App() {
             <WorkstationTable
               items={items}
               setItems={setItems}
-              totalPrice={totalPrice}
               handleEdit={handleEdit}
               categories={categories}
             />
