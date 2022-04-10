@@ -51,7 +51,7 @@ function App() {
       <Header />
 
       <Container>
-        <Row className="mt-4">
+        <Row id="row-main" className="mt-4">
           <Col xs={12} md={5} lg={4}>
             <UserInput
               items={items}

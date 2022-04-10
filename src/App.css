@@ -48,10 +48,14 @@ thead tr th.descending::after {
   margin-left: 0.3rem;
 }
 
-/* #dropdown-basic {
-  width: 2px;
-} */
+@media only screen and (min-width: 768px) {
+  #row-main {
+    min-height: 31rem;
+  }
+}
 
-#thead-category {
-  
+@media only screen and (min-height: 900px) {
+  #row-main {
+    min-height: 45rem;
+  }
 }
