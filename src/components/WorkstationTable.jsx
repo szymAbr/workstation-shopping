@@ -1,82 +1,79 @@
-import React from "react";
-import { Table, Button } from "react-bootstrap";
-import { Pencil, Trash } from "react-bootstrap-icons";
+import React, { useState, useEffect } from "react";
+import TableComponent from "./TableComponent";
 
 export default function WorkstationTable({
   items,
   setItems,
   totalPrice,
-  handleEdit
+  handleEdit,
 }) {
-  function handleDelete(index) {
-    const newItems = items.filter((item) => items.indexOf(item) !== index);
+  const [sortedItems, setSortedItems] = useState([]);
+  const [sortConfig, setSortConfig] = useState({
+    field: "",
+    direction: "",
+  });
 
-    setItems(newItems);
+  function handleDelete(index) {
+    if (sortedItems.length) {
+      const newItems = sortedItems.filter(
+        (item) => sortedItems.indexOf(item) !== index
+      );
+
+      setSortedItems(newItems);
+    } else {
+      const newItems = items.filter((item) => items.indexOf(item) !== index);
+
+      setItems(newItems);
+    }
   }
 
-  const table = (
-    <>
-      <Table className="mt-4" striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Details</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-        </thead>
+  function sortDirection(field) {
+    let direction = "ascending";
 
-        <tbody>
-          {items.map((item, index) => {
-            return (
-              <tr key={index + item.details}>
-                <td>{index + 1}</td>
-                <td>{item.name}</td>
-                <td>{item.details}</td>
-                <td>{item.category}</td>
-                <td>€{item.price}</td>
-                <td>
-                  <Button
-                    variant="warning"
-                    className="btn-sm"
-                    onClick={() => handleEdit(index)}
-                  >
-                    <Pencil />
-                  </Button>
-                  &nbsp;
-                  <Button
-                    variant="danger"
-                    className="btn-sm"
-                    onClick={() => handleDelete(index)}
-                  >
-                    <Trash />
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+    if (sortConfig.field === field && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
 
-      <div>
-        <p className="mt-4">Number of items: {items.length}</p>
+    setSortConfig({ field, direction });
+  }
 
-        <p>Total price: €{totalPrice}</p>
-      </div>
-    </>
-  );
+  useEffect(() => {
+    let newItems = [...items];
+
+    if (sortConfig.field) {
+      newItems.sort((a, b) => {
+        const name = sortConfig.field;
+
+        if (name === "price") {
+          if (Number(a[name]) > Number(b[name])) {
+            return sortConfig.direction === "ascending" ? 1 : -1;
+          } else if (Number(a[name]) < Number(b[name])) {
+            return sortConfig.direction === "ascending" ? -1 : 1;
+          } else {
+            return 0;
+          }
+        } else {
+          if (a[name] > b[name]) {
+            return sortConfig.direction === "ascending" ? 1 : -1;
+          } else if (a[name] < b[name]) {
+            return sortConfig.direction === "ascending" ? -1 : 1;
+          } else {
+            return 0;
+          }
+        }
+      });
+    }
+
+    setSortedItems(newItems);
+  }, [items, sortConfig]);
 
   return (
-    <div>
-      {items && items.length > 0 ? (
-        table
-      ) : (
-        <h3 className="table-placeholder">
-          Add first item to display the table.
-        </h3>
-      )}
-    </div>
+    <TableComponent
+      items={sortedItems.length ? sortedItems : items}
+      sortDirection={sortDirection}
+      handleEdit={handleEdit}
+      handleDelete={handleDelete}
+      totalPrice={totalPrice}
+    />
   );
 }
